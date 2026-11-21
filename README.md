@@ -19,7 +19,7 @@ This is a small sample: 10 programs and one run per version. Passing means the o
 prove the translation is a perfect rewrite.
 
 ## Try it (prototype)
-Colab link: [PASTE YOUR COLAB LINK HERE]
+Colab link: https://colab.research.google.com/drive/1FSYZFexydcGOgAgzGrLotA0c8HQMDdSy?usp=sharing
 
 Open the link and click Runtime, then Run all. It takes about a minute and needs no login. The notebook calls no
 AI. It loads Claude's saved translations and checks them, and it explains each step in plain words.
