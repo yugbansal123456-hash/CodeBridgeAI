@@ -54,7 +54,7 @@ the error message are different from the prompt we pasted on our own computer.
 - Ruchit (S24CSEU2645)
 
 ## Model and AI help
-- Model used for the experiments: [WRITE THE CLAUDE MODEL NAME SHOWN IN THE APP]
+- Model used for the experiments:Claude Sonnet 5.5, using the High effort reasoning setting in the Claude web application
 - Claude also helped us write the test programs, the prompts and the script. We ran all experiments ourselves in new
   Claude chats and saved the replies without changing them.
 - The correct outputs come from compiling and running each C++ program with g++ 13.3.0 (C++17).
