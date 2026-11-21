@@ -1,0 +1,5 @@
+T07: TRICKY: unsigned wraparound and uint8_t printed as a character
+
+V0: WRONG
+V1: PASS
+V2: PASS

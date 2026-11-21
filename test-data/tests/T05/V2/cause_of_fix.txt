@@ -1,0 +1,1 @@
+Cause: The initialization `values[0] - values[0]` works for numeric values but fails for strings because Python does not support string subtraction. C++ initializes `T total = T()`, which creates the default value for the type: `0` for numbers and an empty string for strings.

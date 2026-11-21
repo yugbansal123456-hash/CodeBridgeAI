@@ -1,0 +1,3 @@
+Differences notes:
+- C++ `do-while` executes its body at least once; Python has no direct `do-while`, so a `while True` loop is used.
+- The remaining loops and integer arithmetic behave the same for these values.

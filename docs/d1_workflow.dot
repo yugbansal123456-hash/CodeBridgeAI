@@ -1,0 +1,13 @@
+digraph G { rankdir=TB; graph [fontname="Helvetica", pad=0.3, nodesep=0.5, ranksep=0.45, dpi=170]; node [shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#6B7280", fontname="Helvetica", fontsize=12, margin="0.2,0.12"]; edge [color="#6B7280", fontname="Helvetica", fontsize=11]; labelloc=t; label="Every translation is checked against the real C++ output\n(highlighted boxes are the two prompts P1 and P2; step numbers match the task diagram)"; fontsize=13;
+S1 [label="1 Prepare tests\n10 C++ programs, real C++ output saved"];
+S2 [label="2 Translate: prompt P1\nall 10 programs in one new chat", fillcolor="#E4EEFB", color="#2F6FD0", penwidth=2];
+R  [label="Claude's reply\nPython code and differences notes"];
+S3 [label="3 Verify: code/run.py\nruns the Python, compares with C++ output"];
+D  [shape=diamond, label="All tests\npass?"];
+S5 [label="5 Report\nresults.csv, summary.txt, failures.txt"];
+S4 [label="4 Repair: prompt P2\nfailed tests only, one round", fillcolor="#E4EEFB", color="#2F6FD0", penwidth=2];
+FR [label="Claude's reply\ncause and corrected code"];
+S3b [label="3 Verify again: run.py\nruns the fixed code"];
+S1->S2->R->S3->D; D->S5 [label=" yes"]; D->S4 [label=" no"]; S4->FR->S3b; S3b->S5 [label=" write the results"];
+{rank=same; D; S4}
+}

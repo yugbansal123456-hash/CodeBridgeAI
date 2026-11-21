@@ -1,0 +1,4 @@
+Differences notes:
+- C++ integer division truncates toward zero; Python `//` rounds down for negative results, so `cxx_div` implements C++ division explicitly.
+- C++ remainder follows the sign of the dividend; `cxx_mod` is calculated from the C++-style quotient.
+- C++ prints `bool` as `1` or `0`; Python's `int(identity)` reproduces that output.

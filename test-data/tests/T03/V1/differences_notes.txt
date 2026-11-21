@@ -1,0 +1,3 @@
+Differences notes:
+- Python dictionaries preserve insertion order, but C++ `std::map` iterates in sorted key order; `sorted(counts)` reproduces that order.
+- Python lists provide the operations used here in place of C++ vectors.

@@ -1,0 +1,3 @@
+Differences notes:
+- Python integers have arbitrary precision, whereas C++ `int` and `long long` have fixed widths; all values in this program fit their C++ types.
+- `exp // 2` matches C++ integer division here because the exponents are nonnegative.

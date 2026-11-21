@@ -1,0 +1,9 @@
+digraph G { rankdir=LR; graph [fontname="Helvetica", pad=0.3, nodesep=0.5, ranksep=0.45, dpi=170]; node [shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#6B7280", fontname="Helvetica", fontsize=12, margin="0.2,0.12"]; edge [color="#6B7280", fontname="Helvetica", fontsize=11]; labelloc=t; label="From C++ programs and prompts to checked Python results"; fontsize=13;
+subgraph cluster_in { label="INPUT"; fontname="Helvetica"; color="#9CA3AF"; style="rounded";
+ I1 [label="C++ programs\nprogram.cpp, 10 tests"]; I3 [label="Prompts P1 and P2\ntext files in prompts/", fillcolor="#E4EEFB", color="#2F6FD0", penwidth=2]; I2 [label="Expected output\nfrom the real C++ run"]; }
+subgraph cluster_proc { label="PROCESS"; fontname="Helvetica"; color="#9CA3AF"; style="rounded";
+ P1 [label="Claude chat\ntranslate (P1), repair (P2)"]; P2 [label="Saved replies\ntest-data/replies/*.txt"]; P3 [label="code/run.py\nparse, run, compare"]; }
+subgraph cluster_out { label="OUTPUT"; fontname="Helvetica"; color="#9CA3AF"; style="rounded";
+ O2 [label="Result files\nresults, summary, failures"]; O1 [label="Per-test folders\ncode, output, PASS or WRONG"]; O3 [label="Repair prompt P2\npaste into a new chat", fillcolor="#E4EEFB", color="#2F6FD0", penwidth=2]; }
+I1->P1; I3->P1; P1->P2; P2->P3; I2->P3; P3->O2; P3->O1; P3->O3;
+}

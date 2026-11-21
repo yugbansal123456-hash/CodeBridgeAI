@@ -1,0 +1,419 @@
+You are an expert in both C++17 and Python 3.
+
+Translate each C++ program below into Python 3. The Python program must print EXACTLY the same output as the C++ program.
+
+Rules:
+- Standard library only. No input(). No extra prints. It must run with `python file.py`.
+- Before writing each translation, check these C++ behaviours that Python does differently:
+  1. Integer division and % with negative numbers (C++ truncates toward zero, Python // rounds down).
+  2. Unsigned and fixed-width integer wraparound (unsigned int 0 - 1 = 4294967295, uint8_t 250 + 10 = 4).
+  3. A uint8_t or char printed with cout shows a character; a bool prints as 1 or 0.
+  4. cout prints float/double with at most 6 significant digits (2.0 prints as 2, 1.0/3 prints 0.333333) and has manipulators such as fixed, setprecision, setw, setfill.
+  5. Copy vs reference: structs and vectors passed by value are copied in C++.
+  6. map and set iterate in sorted order.
+  7. Destructors run automatically at the end of a scope, in reverse order of construction.
+- Write clean, readable Python.
+
+Output format: for each program write
+  - a heading like ### T01
+  - ONE python code block
+  - then the line "Differences notes:" followed by at most 4 short bullet points describing the C++ vs Python differences that mattered in that program (write "None" if there were none).
+
+Example of the style expected:
+C++:  int a = -7 / 2; cout << a << endl; unsigned int u = 0; u--; cout << u << endl; cout << 1.0 / 3 << endl;
+Python:
+import math
+a = math.trunc(-7 / 2); print(a)
+u = (0 - 1) & 0xFFFFFFFF; print(u)
+print(format(1 / 3, ".6g"))
+
+Programs:
+
+### T01
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int sum = 0;
+    for (int i = 1; i <= 10; i++) {
+        sum += i;
+    }
+    cout << "Sum 1..10 = " << sum << endl;
+
+    int evens = 0;
+    for (int i = 1; i <= 20; i++) {
+        if (i % 2 == 0) evens += i;
+    }
+    cout << "Sum of evens up to 20 = " << evens << endl;
+
+    int n = 5, fact = 1;
+    while (n > 1) {
+        fact *= n;
+        n--;
+    }
+    cout << "5! = " << fact << endl;
+
+    for (int i = 1; i <= 3; i++) {
+        for (int j = 1; j <= 3; j++) {
+            cout << i * j;
+            if (j < 3) cout << " ";
+        }
+        cout << endl;
+    }
+
+    int countdown = 3;
+    do {
+        cout << "T-" << countdown << endl;
+        countdown--;
+    } while (countdown > 0);
+    return 0;
+}
+```
+
+### T02
+```cpp
+#include <iostream>
+using namespace std;
+
+long long factorial(int n) { return n <= 1 ? 1 : n * factorial(n - 1); }
+int fib(int n) { return n < 2 ? n : fib(n - 1) + fib(n - 2); }
+int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }
+
+long long power(long long base, int exp) {
+    if (exp == 0) return 1;
+    long long half = power(base, exp / 2);
+    return exp % 2 == 0 ? half * half : half * half * base;
+}
+
+int main() {
+    cout << "10! = " << factorial(10) << endl;
+    cout << "15! = " << factorial(15) << endl;
+    cout << "Fibonacci:";
+    for (int i = 0; i <= 10; i++) cout << " " << fib(i);
+    cout << endl;
+    cout << "gcd(48, 18) = " << gcd(48, 18) << endl;
+    cout << "gcd(17, 5) = " << gcd(17, 5) << endl;
+    cout << "2^30 = " << power(2, 30) << endl;
+    cout << "3^13 = " << power(3, 13) << endl;
+    return 0;
+}
+```
+
+### T03
+```cpp
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
+using namespace std;
+
+int main() {
+    vector<string> words = {"the", "cat", "and", "the", "dog", "and", "the", "bird"};
+    map<string, int> counts;
+    for (const string& w : words) {
+        counts[w]++;
+    }
+    for (const auto& kv : counts) {
+        cout << kv.first << ": " << kv.second << endl;
+    }
+    cout << "Unique words: " << counts.size() << endl;
+
+    vector<int> nums;
+    for (int i = 1; i <= 5; i++) nums.push_back(i * i);
+    nums.pop_back();
+    nums.insert(nums.begin(), 0);
+    cout << "Vector:";
+    for (int x : nums) cout << " " << x;
+    cout << endl;
+    cout << "Size: " << nums.size() << ", front: " << nums.front() << ", back: " << nums.back() << endl;
+    return 0;
+}
+```
+
+### T04
+```cpp
+#include <iostream>
+#include <memory>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Shape {
+public:
+    virtual ~Shape() {}
+    virtual double area() const = 0;
+    virtual string name() const { return "Shape"; }
+};
+
+class Rectangle : public Shape {
+protected:
+    double w, h;
+public:
+    Rectangle(double w_, double h_) : w(w_), h(h_) {}
+    double area() const override { return w * h; }
+    string name() const override { return "Rectangle"; }
+};
+
+class Square : public Rectangle {
+public:
+    explicit Square(double s) : Rectangle(s, s) {}
+    string name() const override { return "Square"; }
+};
+
+class Circle : public Shape {
+    double r;
+public:
+    explicit Circle(double r_) : r(r_) {}
+    double area() const override { return 3.14 * r * r; }
+    string name() const override { return "Circle"; }
+};
+
+int main() {
+    vector<unique_ptr<Shape>> shapes;
+    shapes.push_back(make_unique<Rectangle>(3, 4));
+    shapes.push_back(make_unique<Square>(5));
+    shapes.push_back(make_unique<Circle>(2));
+
+    double total = 0;
+    for (const auto& s : shapes) {
+        cout << s->name() << " area = " << s->area() << endl;
+        total += s->area();
+    }
+    cout << "Total area = " << total << endl;
+    return 0;
+}
+```
+
+### T05
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+template <typename T>
+T biggest(T a, T b) {
+    return a > b ? a : b;
+}
+
+template <typename T>
+T sumAll(const vector<T>& v) {
+    T total = T();
+    for (const T& x : v) total = total + x;
+    return total;
+}
+
+template <typename T>
+struct Stack {
+    vector<T> items;
+    void push(T x) { items.push_back(x); }
+    T pop() {
+        T t = items.back();
+        items.pop_back();
+        return t;
+    }
+    bool empty() const { return items.empty(); }
+};
+
+int main() {
+    cout << biggest(3, 9) << endl;
+    cout << biggest(2.5, 1.5) << endl;
+    cout << biggest(string("pear"), string("apple")) << endl;
+
+    cout << sumAll(vector<int>{1, 2, 3, 4}) << endl;
+    cout << sumAll(vector<double>{1.5, 2.5, 3.0}) << endl;
+    cout << sumAll(vector<string>{"a", "b", "c"}) << endl;
+
+    Stack<int> st;
+    st.push(10);
+    st.push(20);
+    st.push(30);
+    while (!st.empty()) cout << st.pop() << " ";
+    cout << endl;
+    return 0;
+}
+```
+
+### T06
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int as[] = {7, -7, 7, -7, 0, 1, -1};
+    int bs[] = {2, 2, -2, -2, 5, -3, 4};
+    for (int i = 0; i < 7; i++) {
+        cout << as[i] << " / " << bs[i] << " = " << as[i] / bs[i]
+             << ", " << as[i] << " % " << bs[i] << " = " << as[i] % bs[i] << endl;
+    }
+    cout << -9 / 4 << " " << -9 % 4 << endl;
+    int x = -17, y = 5;
+    cout << "identity holds: " << ((x / y) * y + (x % y) == x) << endl;
+    long long big = -10000000000LL;
+    cout << big / 3 << " " << big % 3 << endl;
+    return 0;
+}
+```
+
+### T07
+```cpp
+#include <cstdint>
+#include <iostream>
+using namespace std;
+
+int main() {
+    unsigned int u = 0;
+    u -= 1;
+    cout << "0u - 1 = " << u << endl;
+
+    uint8_t b = 250;
+    b += 10;
+    cout << "250 + 10 as uint8_t = " << static_cast<int>(b) << endl;
+
+    uint8_t c = 65;
+    cout << "uint8_t 65 printed directly: " << c << endl;
+    cout << "uint8_t 65 printed with +: " << +c << endl;
+
+    uint32_t x = 4000000000u;
+    x += 500000000u;
+    cout << "4000000000 + 500000000 as uint32_t = " << x << endl;
+
+    uint16_t h = 65535;
+    h++;
+    cout << "uint16_t 65535 + 1 = " << h << endl;
+
+    unsigned char ch = 'a';
+    ch = static_cast<unsigned char>(ch - 32);
+    cout << "uppercase: " << ch << endl;
+
+    unsigned int big = 3000000000u;
+    cout << "3000000000u * 2 = " << big * 2 << endl;
+
+    unsigned int s = 5, t = 10;
+    cout << "5u - 10u = " << s - t << endl;
+    cout << "(5u - 10u) > 0 is " << (s - t > 0) << endl;
+    return 0;
+}
+```
+
+### T08
+```cpp
+#include <iomanip>
+#include <iostream>
+using namespace std;
+
+int main() {
+    double third = 1.0 / 3;
+    cout << third << endl;
+    cout << 2.0 << endl;
+    cout << 100.0 / 7 << endl;
+    cout << 1234567.891 << endl;
+    cout << 0.00001234 << endl;
+    cout << 1e10 << endl;
+    float f = 0.1f;
+    cout << f << endl;
+    cout << 5 / 2 << " " << 5 / 2.0 << endl;
+
+    cout << fixed << setprecision(2) << 3.14159 << " " << 2.0 << endl;
+    cout << setprecision(10) << third << endl;
+    cout << defaultfloat << setprecision(6);
+
+    cout << setw(8) << setfill('*') << 42 << endl;
+    cout << setfill(' ') << left << setw(6) << "ab" << "|" << endl;
+    cout << right << setw(6) << "ab" << "|" << endl;
+    cout << scientific << setprecision(3) << 12345.6789 << endl;
+    return 0;
+}
+```
+
+### T09
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct Box {
+    int v;
+};
+
+void byValue(int x) { x += 10; }
+void byRef(int& x) { x += 10; }
+void byPtr(int* x) { *x += 10; }
+void boxByValue(Box b) { b.v = 99; cout << "inside boxByValue: " << b.v << endl; }
+void boxByRef(Box& b) { b.v = 99; }
+void vecByValue(vector<int> v) { v.push_back(4); }
+void vecByRef(vector<int>& v) { v.push_back(4); }
+
+int main() {
+    int n = 1;
+    byValue(n);
+    cout << "after byValue: " << n << endl;
+    byRef(n);
+    cout << "after byRef: " << n << endl;
+    byPtr(&n);
+    cout << "after byPtr: " << n << endl;
+
+    Box b{1};
+    boxByValue(b);
+    cout << "box after boxByValue: " << b.v << endl;
+    boxByRef(b);
+    cout << "box after boxByRef: " << b.v << endl;
+
+    vector<int> v = {1, 2, 3};
+    vecByValue(v);
+    cout << "vector size after vecByValue: " << v.size() << endl;
+    vecByRef(v);
+    cout << "vector size after vecByRef: " << v.size() << endl;
+
+    Box b1{1};
+    Box b2 = b1;
+    b2.v = 2;
+    cout << "b1.v = " << b1.v << ", b2.v = " << b2.v << endl;
+
+    vector<int> orig{1, 2, 3};
+    vector<int> dup = orig;
+    dup[0] = 100;
+    cout << "orig[0] = " << orig[0] << ", dup[0] = " << dup[0] << endl;
+
+    int* p = &n;
+    *p = 50;
+    cout << "n via pointer: " << n << endl;
+    int& r = n;
+    r = 60;
+    cout << "n via reference: " << n << endl;
+    return 0;
+}
+```
+
+### T10
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Tracker {
+    string name;
+    explicit Tracker(const string& n) : name(n) { cout << "construct " << name << endl; }
+    ~Tracker() { cout << "destruct " << name << endl; }
+};
+
+void work() {
+    Tracker w1("W1");
+    Tracker w2("W2");
+    cout << "work() body" << endl;
+}
+
+int main() {
+    Tracker a("A");
+    {
+        Tracker b("B");
+        Tracker c("C");
+        cout << "inner scope end" << endl;
+    }
+    work();
+    Tracker d("D");
+    cout << "main end" << endl;
+    return 0;
+}
+```

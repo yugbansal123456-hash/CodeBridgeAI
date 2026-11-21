@@ -1,0 +1,4 @@
+Differences notes:
+- Python uses inheritance and method overriding to reproduce the C++ virtual-function behaviour.
+- C++ `cout` default floating-point formatting uses six significant digits; `format(value, ".6g")` reproduces that formatting for these values.
+- Python manages object lifetimes automatically, but this program has no visible destructor output.

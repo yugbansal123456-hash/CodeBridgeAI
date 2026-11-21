@@ -1,0 +1,4 @@
+Rectangle area = 12
+Square area = 25
+Circle area = 12.56
+Total area = 49.56

@@ -1,0 +1,5 @@
+T10: TRICKY: constructor and destructor order (scopes end automatically)
+
+V0: PASS
+V1: PASS
+V2: PASS

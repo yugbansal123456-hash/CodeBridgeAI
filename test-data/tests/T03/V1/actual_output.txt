@@ -1,0 +1,8 @@
+and: 2
+bird: 1
+cat: 1
+dog: 1
+the: 3
+Unique words: 5
+Vector: 0 1 4 9 16
+Size: 5, front: 0, back: 16

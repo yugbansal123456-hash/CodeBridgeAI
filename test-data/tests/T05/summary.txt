@@ -1,0 +1,5 @@
+T05: Templates and a generic stack; cout prints 7.0 as 7 (medium)
+
+V0: WRONG
+V1: ERROR
+V2: PASS

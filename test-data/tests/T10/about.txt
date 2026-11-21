@@ -1,0 +1,1 @@
+TRICKY: constructor and destructor order (scopes end automatically)

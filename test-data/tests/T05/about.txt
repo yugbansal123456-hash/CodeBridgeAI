@@ -1,0 +1,1 @@
+Templates and a generic stack; cout prints 7.0 as 7 (medium)

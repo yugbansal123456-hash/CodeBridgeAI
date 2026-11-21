@@ -1,0 +1,6 @@
+Translate each of the following C++ programs to Python.
+
+Output format: for each program write a heading like ### T01 followed by ONE python code block.
+
+Programs:
+{programs}

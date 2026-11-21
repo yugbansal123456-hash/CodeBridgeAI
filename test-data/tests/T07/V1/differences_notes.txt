@@ -1,0 +1,5 @@
+Differences notes:
+- Python integers do not overflow; masks (`& MASK8`, `& MASK16`, `& MASK32`) explicitly reproduce unsigned fixed-width wraparound.
+- C++ `uint8_t` is commonly an unsigned character type, so printing it directly displays a character; `chr(c)` reproduces that. Unary `+c` promotes it to an integer.
+- C++ `bool` prints as `1` or `0`; `int(...)` reproduces that.
+- Unsigned `int` arithmetic wraps modulo 2^32 on the platform assumed by this program.

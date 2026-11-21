@@ -1,0 +1,12 @@
+after byValue: 1
+after byRef: 11
+after byPtr: 21
+inside boxByValue: 99
+box after boxByValue: 1
+box after boxByRef: 99
+vector size after vecByValue: 3
+vector size after vecByRef: 4
+b1.v = 1, b2.v = 2
+orig[0] = 1, dup[0] = 100
+n via pointer: 50
+n via reference: 60

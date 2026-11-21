@@ -1,0 +1,31 @@
+Earlier you translated C++ programs to Python. I ran your Python code and compared it with the output of the real C++ program. The tests below FAILED. For each one I give the C++ code, your Python code, the expected output (from the real C++ program) and the actual output or error.
+
+For each test: first state the cause of the failure in 1 or 2 lines, then give the corrected Python program. Do not change what the program is meant to do. Standard library only, no input().
+
+Output format for each test: a heading like ### T05, then a line starting with "Cause:", then ONE python code block with the FULL corrected program. Only include the tests listed below.
+
+{failed_tests}
+
+(For each failed test the evaluator inserts this block:)
+=====
+### {test_id}  (status: {status})
+
+C++ code:
+```cpp
+{cpp_code}
+```
+
+Your Python code:
+```python
+{python_code}
+```
+
+Expected output:
+```
+{expected_output}
+```
+
+Actual output or error:
+```
+{actual_output}
+```

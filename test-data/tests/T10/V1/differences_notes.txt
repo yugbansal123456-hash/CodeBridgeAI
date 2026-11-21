@@ -1,0 +1,3 @@
+Differences notes:
+- Python does not provide C++-style deterministic scope-based destructors; the destructor messages are emitted explicitly in the same order.
+- C++ destroys local objects in reverse order of construction when their scope ends.

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/claude/build/repo/CodeBridgeAI/test-data/tests/T05/V1/code.py", line 32, in <module>
+    print(sum_all(["a", "b", "c"]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/claude/build/repo/CodeBridgeAI/test-data/tests/T05/V1/code.py", line 6, in sum_all
+    total = values[0] - values[0] if values else 0
+            ~~~~~~~~~~^~~~~~~~~~~
+TypeError: unsupported operand type(s) for -: 'str' and 'str'

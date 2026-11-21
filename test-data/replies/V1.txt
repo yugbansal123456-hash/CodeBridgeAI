@@ -1,0 +1,456 @@
+C++17 TO PYTHON 3 TRANSLATIONS
+================================
+
+Each Python program reproduces the output of its corresponding C++ program.
+
+### T01
+
+```python
+total = sum(range(1, 11))
+print(f"Sum 1..10 = {total}")
+
+evens = sum(i for i in range(1, 21) if i % 2 == 0)
+print(f"Sum of evens up to 20 = {evens}")
+
+n = 5
+fact = 1
+while n > 1:
+    fact *= n
+    n -= 1
+print(f"5! = {fact}")
+
+for i in range(1, 4):
+    print(" ".join(str(i * j) for j in range(1, 4)))
+
+countdown = 3
+while True:
+    print(f"T-{countdown}")
+    countdown -= 1
+    if countdown <= 0:
+        break
+```
+
+Differences notes:
+- C++ `do-while` executes its body at least once; Python has no direct `do-while`, so a `while True` loop is used.
+- The remaining loops and integer arithmetic behave the same for these values.
+
+### T02
+
+```python
+def factorial(n):
+    return 1 if n <= 1 else n * factorial(n - 1)
+
+
+def fib(n):
+    return n if n < 2 else fib(n - 1) + fib(n - 2)
+
+
+def gcd(a, b):
+    return a if b == 0 else gcd(b, a % b)
+
+
+def power(base, exp):
+    if exp == 0:
+        return 1
+    half = power(base, exp // 2)
+    return half * half if exp % 2 == 0 else half * half * base
+
+
+print(f"10! = {factorial(10)}")
+print(f"15! = {factorial(15)}")
+
+print("Fibonacci:", end="")
+for i in range(11):
+    print(f" {fib(i)}", end="")
+print()
+
+print(f"gcd(48, 18) = {gcd(48, 18)}")
+print(f"gcd(17, 5) = {gcd(17, 5)}")
+print(f"2^30 = {power(2, 30)}")
+print(f"3^13 = {power(3, 13)}")
+```
+
+Differences notes:
+- Python integers have arbitrary precision, whereas C++ `int` and `long long` have fixed widths; all values in this program fit their C++ types.
+- `exp // 2` matches C++ integer division here because the exponents are nonnegative.
+
+### T03
+
+```python
+words = ["the", "cat", "and", "the", "dog", "and", "the", "bird"]
+counts = {}
+
+for word in words:
+    counts[word] = counts.get(word, 0) + 1
+
+# C++ std::map iterates in sorted key order.
+for word in sorted(counts):
+    print(f"{word}: {counts[word]}")
+
+print(f"Unique words: {len(counts)}")
+
+nums = []
+for i in range(1, 6):
+    nums.append(i * i)
+
+nums.pop()
+nums.insert(0, 0)
+
+print("Vector:", *nums)
+print(f"Size: {len(nums)}, front: {nums[0]}, back: {nums[-1]}")
+```
+
+Differences notes:
+- Python dictionaries preserve insertion order, but C++ `std::map` iterates in sorted key order; `sorted(counts)` reproduces that order.
+- Python lists provide the operations used here in place of C++ vectors.
+
+### T04
+
+```python
+def cout_number(value):
+    # Approximate C++ defaultfloat output: six significant digits.
+    return format(value, ".6g")
+
+
+class Shape:
+    def area(self):
+        raise NotImplementedError
+
+    def name(self):
+        return "Shape"
+
+
+class Rectangle(Shape):
+    def __init__(self, w, h):
+        self.w = w
+        self.h = h
+
+    def area(self):
+        return self.w * self.h
+
+    def name(self):
+        return "Rectangle"
+
+
+class Square(Rectangle):
+    def __init__(self, side):
+        super().__init__(side, side)
+
+    def name(self):
+        return "Square"
+
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.r = radius
+
+    def area(self):
+        return 3.14 * self.r * self.r
+
+    def name(self):
+        return "Circle"
+
+
+shapes = [Rectangle(3, 4), Square(5), Circle(2)]
+
+total = 0.0
+for shape in shapes:
+    area = shape.area()
+    print(f"{shape.name()} area = {cout_number(area)}")
+    total += area
+
+print(f"Total area = {cout_number(total)}")
+```
+
+Differences notes:
+- Python uses inheritance and method overriding to reproduce the C++ virtual-function behaviour.
+- C++ `cout` default floating-point formatting uses six significant digits; `format(value, ".6g")` reproduces that formatting for these values.
+- Python manages object lifetimes automatically, but this program has no visible destructor output.
+
+### T05
+
+```python
+def biggest(a, b):
+    return a if a > b else b
+
+
+def sum_all(values):
+    total = values[0] - values[0] if values else 0
+    for value in values:
+        total = total + value
+    return total
+
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, value):
+        self.items.append(value)
+
+    def pop(self):
+        return self.items.pop()
+
+    def empty(self):
+        return len(self.items) == 0
+
+
+print(biggest(3, 9))
+print(format(biggest(2.5, 1.5), ".6g"))
+print(biggest("pear", "apple"))
+
+print(sum_all([1, 2, 3, 4]))
+print(format(sum_all([1.5, 2.5, 3.0]), ".6g"))
+print(sum_all(["a", "b", "c"]))
+
+st = Stack()
+st.push(10)
+st.push(20)
+st.push(30)
+
+while not st.empty():
+    print(st.pop(), end=" ")
+print()
+```
+
+Differences notes:
+- Python functions are dynamically typed, so one `biggest` and one `sum_all` function can handle the demonstrated types instead of C++ templates.
+- Python lists implement the stack's push/pop behaviour.
+- The floating-point result is formatted with six significant digits to match default C++ `cout`.
+
+### T06
+
+```python
+def cxx_div(a, b):
+    """Integer division truncated toward zero, as in C++."""
+    quotient = abs(a) // abs(b)
+    if (a < 0) != (b < 0):
+        quotient = -quotient
+    return quotient
+
+
+def cxx_mod(a, b):
+    """C++ remainder: a - trunc(a / b) * b."""
+    return a - cxx_div(a, b) * b
+
+
+a_values = [7, -7, 7, -7, 0, 1, -1]
+b_values = [2, 2, -2, -2, 5, -3, 4]
+
+for a, b in zip(a_values, b_values):
+    print(
+        f"{a} / {b} = {cxx_div(a, b)}, "
+        f"{a} % {b} = {cxx_mod(a, b)}"
+    )
+
+print(cxx_div(-9, 4), cxx_mod(-9, 4))
+
+x, y = -17, 5
+identity = (cxx_div(x, y) * y + cxx_mod(x, y) == x)
+print(f"identity holds: {int(identity)}")
+
+big = -10000000000
+print(cxx_div(big, 3), cxx_mod(big, 3))
+```
+
+Differences notes:
+- C++ integer division truncates toward zero; Python `//` rounds down for negative results, so `cxx_div` implements C++ division explicitly.
+- C++ remainder follows the sign of the dividend; `cxx_mod` is calculated from the C++-style quotient.
+- C++ prints `bool` as `1` or `0`; Python's `int(identity)` reproduces that output.
+
+### T07
+
+```python
+MASK8 = (1 << 8) - 1
+MASK16 = (1 << 16) - 1
+MASK32 = (1 << 32) - 1
+
+u = (0 - 1) & MASK32
+print(f"0u - 1 = {u}")
+
+b = (250 + 10) & MASK8
+print(f"250 + 10 as uint8_t = {b}")
+
+c = 65
+print(f"uint8_t 65 printed directly: {chr(c)}")
+print(f"uint8_t 65 printed with +: {c}")
+
+x = (4000000000 + 500000000) & MASK32
+print(f"4000000000 + 500000000 as uint32_t = {x}")
+
+h = (65535 + 1) & MASK16
+print(f"uint16_t 65535 + 1 = {h}")
+
+ch = ord("a")
+ch = (ch - 32) & MASK8
+print(f"uppercase: {chr(ch)}")
+
+big = 3000000000
+product = (big * 2) & MASK32
+print(f"3000000000u * 2 = {product}")
+
+s, t = 5, 10
+difference = (s - t) & MASK32
+print(f"5u - 10u = {difference}")
+print(f"(5u - 10u) > 0 is {int(difference > 0)}")
+```
+
+Differences notes:
+- Python integers do not overflow; masks (`& MASK8`, `& MASK16`, `& MASK32`) explicitly reproduce unsigned fixed-width wraparound.
+- C++ `uint8_t` is commonly an unsigned character type, so printing it directly displays a character; `chr(c)` reproduces that. Unary `+c` promotes it to an integer.
+- C++ `bool` prints as `1` or `0`; `int(...)` reproduces that.
+- Unsigned `int` arithmetic wraps modulo 2^32 on the platform assumed by this program.
+
+### T08
+
+```python
+third = 1.0 / 3
+
+# Default C++ cout formatting: defaultfloat with six significant digits.
+print(format(third, ".6g"))
+print(format(2.0, ".6g"))
+print(format(100.0 / 7, ".6g"))
+print(format(1234567.891, ".6g"))
+print(format(0.00001234, ".6g"))
+print(format(1e10, ".6g"))
+
+# C++ float is typically IEEE-754 binary32. The displayed value is 0.1.
+print(format(0.1, ".6g"))
+print("2 2.5")
+
+# fixed << setprecision(2)
+print(f"{3.14159:.2f} {2.0:.2f}")
+
+# setprecision(10) with defaultfloat
+print(format(third, ".10g"))
+
+# defaultfloat << setprecision(6) is now in effect.
+print(f"{42:*>8}")
+print(f"{'ab':<6}|")
+print(f"{'ab':>6}|")
+
+# scientific << setprecision(3)
+print(format(12345.6789, ".3e"))
+```
+
+Differences notes:
+- C++ `cout` defaults to six significant digits; Python's `.6g` formatting matches that for the default-format values here.
+- C++ `fixed` with precision 2 corresponds to Python `.2f`; scientific precision 3 corresponds to `.3e`.
+- Python's width/alignment format specifiers reproduce `setw`, `setfill`, `left`, and `right`.
+- C++ integer `5 / 2` is `2`, while `5 / 2.0` is floating-point `2.5`; the corresponding output is written explicitly.
+
+### T09
+
+```python
+class Box:
+    def __init__(self, value):
+        self.v = value
+
+
+def by_value(x):
+    # Rebinding a local integer does not change the caller's integer.
+    x += 10
+
+
+def by_ref(cell):
+    cell[0] += 10
+
+
+def by_ptr(cell):
+    cell[0] += 10
+
+
+def box_by_value(box):
+    # Simulate the copy made by passing a C++ struct by value.
+    copied_box = Box(box.v)
+    copied_box.v = 99
+    print(f"inside boxByValue: {copied_box.v}")
+
+
+def box_by_ref(box):
+    box.v = 99
+
+
+def vec_by_value(values):
+    # Simulate the independent vector copy made by C++ pass-by-value.
+    copied_values = values.copy()
+    copied_values.append(4)
+
+
+def vec_by_ref(values):
+    values.append(4)
+
+
+n = [1]  # A mutable cell lets the reference/pointer examples change the value.
+by_value(n[0])
+print(f"after byValue: {n[0]}")
+
+by_ref(n)
+print(f"after byRef: {n[0]}")
+
+by_ptr(n)
+print(f"after byPtr: {n[0]}")
+
+b = Box(1)
+box_by_value(b)
+print(f"box after boxByValue: {b.v}")
+box_by_ref(b)
+print(f"box after boxByRef: {b.v}")
+
+v = [1, 2, 3]
+vec_by_value(v)
+print(f"vector size after vecByValue: {len(v)}")
+vec_by_ref(v)
+print(f"vector size after vecByRef: {len(v)}")
+
+b1 = Box(1)
+b2 = Box(b1.v)
+b2.v = 2
+print(f"b1.v = {b1.v}, b2.v = {b2.v}")
+
+orig = [1, 2, 3]
+dup = orig.copy()
+dup[0] = 100
+print(f"orig[0] = {orig[0]}, dup[0] = {dup[0]}")
+
+n[0] = 50  # Simulates writing through a pointer.
+print(f"n via pointer: {n[0]}")
+n[0] = 60  # Simulates writing through a reference.
+print(f"n via reference: {n[0]}")
+```
+
+Differences notes:
+- Python integers are immutable and passed as object references; mutable one-element lists are used as cells to demonstrate C++ reference and pointer mutation.
+- C++ structs and vectors passed by value are copied; the Python functions explicitly copy the `Box` value or list where needed.
+- Python list assignment does not copy a list; `.copy()` is used to reproduce C++ vector copy behaviour.
+
+### T10
+
+```python
+def work():
+    print("construct W1")
+    print("construct W2")
+    print("work() body")
+    # C++ local objects are destroyed in reverse construction order.
+    print("destruct W2")
+    print("destruct W1")
+
+
+print("construct A")
+print("construct B")
+print("construct C")
+print("inner scope end")
+print("destruct C")
+print("destruct B")
+
+work()
+
+print("construct D")
+print("main end")
+print("destruct D")
+print("destruct A")
+```
+
+Differences notes:
+- Python does not provide C++-style deterministic scope-based destructors; the destructor messages are emitted explicitly in the same order.
+- C++ destroys local objects in reverse order of construction when their scope ends.

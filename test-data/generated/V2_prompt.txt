@@ -1,0 +1,126 @@
+Earlier you translated C++ programs to Python. I ran your Python code and compared it with the output of the real C++ program. The tests below FAILED. For each one I give the C++ code, your Python code, the expected output (from the real C++ program) and the actual output or error.
+
+For each test: first state the cause of the failure in 1 or 2 lines, then give the corrected Python program. Do not change what the program is meant to do. Standard library only, no input().
+
+Output format for each test: a heading like ### T05, then a line starting with "Cause:", then ONE python code block with the FULL corrected program. Only include the tests listed below.
+
+=====
+### T05  (status: ERROR)
+
+C++ code:
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+template <typename T>
+T biggest(T a, T b) {
+    return a > b ? a : b;
+}
+
+template <typename T>
+T sumAll(const vector<T>& v) {
+    T total = T();
+    for (const T& x : v) total = total + x;
+    return total;
+}
+
+template <typename T>
+struct Stack {
+    vector<T> items;
+    void push(T x) { items.push_back(x); }
+    T pop() {
+        T t = items.back();
+        items.pop_back();
+        return t;
+    }
+    bool empty() const { return items.empty(); }
+};
+
+int main() {
+    cout << biggest(3, 9) << endl;
+    cout << biggest(2.5, 1.5) << endl;
+    cout << biggest(string("pear"), string("apple")) << endl;
+
+    cout << sumAll(vector<int>{1, 2, 3, 4}) << endl;
+    cout << sumAll(vector<double>{1.5, 2.5, 3.0}) << endl;
+    cout << sumAll(vector<string>{"a", "b", "c"}) << endl;
+
+    Stack<int> st;
+    st.push(10);
+    st.push(20);
+    st.push(30);
+    while (!st.empty()) cout << st.pop() << " ";
+    cout << endl;
+    return 0;
+}
+```
+
+Your Python code:
+```python
+def biggest(a, b):
+    return a if a > b else b
+
+
+def sum_all(values):
+    total = values[0] - values[0] if values else 0
+    for value in values:
+        total = total + value
+    return total
+
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, value):
+        self.items.append(value)
+
+    def pop(self):
+        return self.items.pop()
+
+    def empty(self):
+        return len(self.items) == 0
+
+
+print(biggest(3, 9))
+print(format(biggest(2.5, 1.5), ".6g"))
+print(biggest("pear", "apple"))
+
+print(sum_all([1, 2, 3, 4]))
+print(format(sum_all([1.5, 2.5, 3.0]), ".6g"))
+print(sum_all(["a", "b", "c"]))
+
+st = Stack()
+st.push(10)
+st.push(20)
+st.push(30)
+
+while not st.empty():
+    print(st.pop(), end=" ")
+print()
+```
+
+Expected output:
+```
+9
+2.5
+pear
+10
+7
+abc
+30 20 10
+```
+
+Actual output or error:
+```
+Traceback (most recent call last):
+  File "/home/claude/build/repo/CodeBridgeAI/test-data/tests/T05/V1/code.py", line 32, in <module>
+    print(sum_all(["a", "b", "c"]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/claude/build/repo/CodeBridgeAI/test-data/tests/T05/V1/code.py", line 6, in sum_all
+    total = values[0] - values[0] if values else 0
+            ~~~~~~~~~~^~~~~~~~~~~
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
+```

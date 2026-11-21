@@ -1,0 +1,4 @@
+Differences notes:
+- Python integers are immutable and passed as object references; mutable one-element lists are used as cells to demonstrate C++ reference and pointer mutation.
+- C++ structs and vectors passed by value are copied; the Python functions explicitly copy the `Box` value or list where needed.
+- Python list assignment does not copy a list; `.copy()` is used to reproduce C++ vector copy behaviour.

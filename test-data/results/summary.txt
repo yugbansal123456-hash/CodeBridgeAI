@@ -1,0 +1,5 @@
+SCORES (a test passes only if the output is identical to the real C++ output)
+
+V0: 4/10 passed (40%)  ########
+V1: 9/10 passed (90%)  ##################
+V2: 10/10 passed (100%)  ####################

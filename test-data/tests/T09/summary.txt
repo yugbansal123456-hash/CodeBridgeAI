@@ -1,0 +1,5 @@
+T09: TRICKY: pass by value, by reference, by pointer; copies of structs and vectors
+
+V0: WRONG
+V1: PASS
+V2: PASS

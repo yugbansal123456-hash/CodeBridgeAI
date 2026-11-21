@@ -1,0 +1,10 @@
+digraph G { rankdir=TB; compound=true; graph [fontname="Helvetica", pad=0.3, nodesep=0.5, ranksep=0.45, dpi=170]; node [shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#6B7280", fontname="Helvetica", fontsize=12, margin="0.2,0.12"]; edge [color="#6B7280", fontname="Helvetica", fontsize=11]; labelloc=t; label="Claude produces text and run.py turns it into verified results"; fontsize=13;
+U [label="Student team\npastes prompts, copies replies"]; C [label="Claude chat\nP1 translate, P2 repair", fillcolor="#E4EEFB", color="#2F6FD0", penwidth=2];
+subgraph cluster_repo { label="GitHub repository CodeBridgeAI"; fontname="Helvetica"; color="#9CA3AF"; style="rounded";
+ R1 [label="prompts/\nV0, V1, V2, final"]; R2 [label="test-data/\ntests, replies, results"]; R3 [label="docs/ and CHANGELOG.md\ndiagrams, dated changes"]; }
+subgraph cluster_eval { label="code/run.py evaluator"; fontname="Helvetica"; color="#6B7280"; style="rounded";
+ E1 [label="Reply parser\nsplits ### Txx"]; E2 [label="Python runner\n20 s time limit"]; E3 [label="Comparer\nvs real C++ output"]; E4 [label="Report writer\nand P2 prompt builder"]; E1->E2->E3->E4; }
+N [label="Google Colab notebook (prototype)\nembeds the repo, runs run.py, saved outputs"];
+U->C [label=" prompts"]; C->U [label=" replies"]; U->R2 [label=" saves replies"];
+R2->E1 [lhead=cluster_eval, label=" reads replies and tests"]; E4->R2 [label=" writes results and P2"]; N->E2 [style=dashed, label=" runs"];
+}

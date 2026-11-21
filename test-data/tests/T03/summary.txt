@@ -1,0 +1,5 @@
+T03: vector and map word count; map prints in sorted order (medium)
+
+V0: WRONG
+V1: PASS
+V2: PASS

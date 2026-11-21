@@ -1,0 +1,5 @@
+T08: TRICKY: cout number formatting (6 digits, fixed, setprecision, setw)
+
+V0: WRONG
+V1: PASS
+V2: PASS

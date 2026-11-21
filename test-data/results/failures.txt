@@ -1,0 +1,9 @@
+FAILURES (auto-generated: first place where the Python output differs from the real C++ output)
+
+T03 V0 WRONG: line 8:  expected [Size: 5, front: 0, back: 16]   got [Size: 5 , front: 0 , back: 16]
+T05 V0 WRONG: line 5:  expected [7]   got [7.0]
+T05 V1 ERROR: error: TypeError: unsupported operand type(s) for -: 'str' and 'str'
+T06 V0 WRONG: line 1:  expected [7 / 2 = 3, 7 % 2 = 1]   got [7 / 2 = 3 , 7 % 2 = 1]
+T07 V0 WRONG: line 10:  expected [(5u - 10u) > 0 is 1]   got [(5u - 10u) > 0 is True]
+T08 V0 WRONG: line 1:  expected [0.333333]   got [0.3333333333333333]
+T09 V0 WRONG: line 9:  expected [b1.v = 1, b2.v = 2]   got [b1.v = 1 , b2.v = 2]

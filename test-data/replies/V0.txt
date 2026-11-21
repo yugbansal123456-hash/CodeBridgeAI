@@ -1,0 +1,525 @@
+### T01
+
+```python
+# Sum of numbers from 1 to 10
+total = 0
+for i in range(1, 11):
+    total += i
+
+print("Sum 1..10 =", total)
+
+# Sum of even numbers up to 20
+evens = 0
+for i in range(1, 21):
+    if i % 2 == 0:
+        evens += i
+
+print("Sum of evens up to 20 =", evens)
+
+# Factorial using while loop
+n = 5
+fact = 1
+
+while n > 1:
+    fact *= n
+    n -= 1
+
+print("5! =", fact)
+
+# Multiplication table
+for i in range(1, 4):
+    for j in range(1, 4):
+        print(i * j, end=" " if j < 3 else "")
+    print()
+
+# Countdown (do-while equivalent)
+countdown = 3
+
+while True:
+    print("T-" + str(countdown))
+    countdown -= 1
+
+    if countdown <= 0:
+        break
+```
+
+### T02
+
+```python
+# Recursive factorial
+def factorial(n):
+    return 1 if n <= 1 else n * factorial(n - 1)
+
+
+# Recursive Fibonacci
+def fib(n):
+    return n if n < 2 else fib(n - 1) + fib(n - 2)
+
+
+# Recursive GCD
+def gcd(a, b):
+    return a if b == 0 else gcd(b, a % b)
+
+
+# Recursive power using exponentiation by squaring
+def power(base, exp):
+    if exp == 0:
+        return 1
+
+    half = power(base, exp // 2)
+
+    if exp % 2 == 0:
+        return half * half
+    else:
+        return half * half * base
+
+
+print("10! =", factorial(10))
+print("15! =", factorial(15))
+
+print("Fibonacci:", end="")
+for i in range(11):
+    print(f" {fib(i)}", end="")
+print()
+
+print("gcd(48, 18) =", gcd(48, 18))
+print("gcd(17, 5) =", gcd(17, 5))
+
+print("2^30 =", power(2, 30))
+print("3^13 =", power(3, 13))
+```
+
+### T03
+
+```python
+# Word frequency using dictionary
+words = ["the", "cat", "and", "the", "dog", "and", "the", "bird"]
+
+counts = {}
+
+for w in words:
+    counts[w] = counts.get(w, 0) + 1
+
+# C++ map prints keys in sorted order
+for word in sorted(counts):
+    print(f"{word}: {counts[word]}")
+
+print("Unique words:", len(counts))
+
+# List operations
+nums = []
+
+for i in range(1, 6):
+    nums.append(i * i)
+
+nums.pop()
+nums.insert(0, 0)
+
+print("Vector:", *nums)
+print(
+    "Size:", len(nums),
+    ", front:", nums[0],
+    ", back:", nums[-1]
+)
+```
+
+### T04
+
+```python
+class Shape:
+    def area(self):
+        raise NotImplementedError("Subclasses must implement area()")
+
+    def name(self):
+        return "Shape"
+
+
+class Rectangle(Shape):
+    def __init__(self, w, h):
+        self.w = w
+        self.h = h
+
+    def area(self):
+        return self.w * self.h
+
+    def name(self):
+        return "Rectangle"
+
+
+class Square(Rectangle):
+    def __init__(self, s):
+        super().__init__(s, s)
+
+    def name(self):
+        return "Square"
+
+
+class Circle(Shape):
+    def __init__(self, r):
+        self.r = r
+
+    def area(self):
+        return 3.14 * self.r * self.r
+
+    def name(self):
+        return "Circle"
+
+
+# Polymorphism: different objects accessed through Shape interface
+shapes = [
+    Rectangle(3, 4),
+    Square(5),
+    Circle(2)
+]
+
+total = 0
+
+for s in shapes:
+    print(s.name(), "area =", s.area())
+    total += s.area()
+
+print("Total area =", total)
+```
+
+### T05
+
+```python
+# Generic equivalent: biggest()
+def biggest(a, b):
+    return a if a > b else b
+
+
+# Generic equivalent: sumAll()
+def sum_all(v):
+    total = v[0] * 0 if v else 0
+
+    for x in v:
+        total = total + x
+
+    return total
+
+
+# Stack implementation using a list
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, x):
+        self.items.append(x)
+
+    def pop(self):
+        return self.items.pop()
+
+    def empty(self):
+        return len(self.items) == 0
+
+
+print(biggest(3, 9))
+print(biggest(2.5, 1.5))
+print(biggest("pear", "apple"))
+
+print(sum_all([1, 2, 3, 4]))
+print(sum_all([1.5, 2.5, 3.0]))
+print(sum_all(["a", "b", "c"]))
+
+st = Stack()
+st.push(10)
+st.push(20)
+st.push(30)
+
+while not st.empty():
+    print(st.pop(), end=" ")
+
+print()
+```
+
+### T06
+
+```python
+# C++ integer division truncates toward zero.
+# Python's // uses floor division, so we implement C++ behavior.
+
+def cpp_div(a, b):
+    return int(a / b)
+
+
+def cpp_mod(a, b):
+    return a - cpp_div(a, b) * b
+
+
+as_values = [7, -7, 7, -7, 0, 1, -1]
+bs_values = [2, 2, -2, -2, 5, -3, 4]
+
+for i in range(7):
+    a = as_values[i]
+    b = bs_values[i]
+
+    print(
+        a, "/", b, "=", cpp_div(a, b),
+        ",", a, "%", b, "=", cpp_mod(a, b)
+    )
+
+print(cpp_div(-9, 4), cpp_mod(-9, 4))
+
+x = -17
+y = 5
+
+print(
+    "identity holds:",
+    cpp_div(x, y) * y + cpp_mod(x, y) == x
+)
+
+big = -10000000000
+
+print(cpp_div(big, 3), cpp_mod(big, 3))
+```
+
+### T07
+
+```python
+# Simulating C++ unsigned integer types using bit masks.
+
+# unsigned int: 32-bit
+u = 0
+u = (u - 1) & 0xFFFFFFFF
+
+print("0u - 1 =", u)
+
+# uint8_t: 8-bit
+b = 250
+b = (b + 10) & 0xFF
+
+print("250 + 10 as uint8_t =", b)
+
+c = 65
+
+print("uint8_t 65 printed directly:", chr(c))
+print("uint8_t 65 printed with +:", +c)
+
+# uint32_t: 32-bit
+x = 4000000000
+x = (x + 500000000) & 0xFFFFFFFF
+
+print("4000000000 + 500000000 as uint32_t =", x)
+
+# uint16_t: 16-bit
+h = 65535
+h = (h + 1) & 0xFFFF
+
+print("uint16_t 65535 + 1 =", h)
+
+# Unsigned character conversion
+ch = ord('a')
+ch = (ch - 32) & 0xFF
+
+print("uppercase:", chr(ch))
+
+# unsigned int multiplication
+big = 3000000000
+result = (big * 2) & 0xFFFFFFFF
+
+print("3000000000u * 2 =", result)
+
+# Unsigned subtraction
+s = 5
+t = 10
+
+difference = (s - t) & 0xFFFFFFFF
+
+print("5u - 10u =", difference)
+print("(5u - 10u) > 0 is", difference > 0)
+```
+
+### T08
+
+```python
+# Floating-point values
+third = 1.0 / 3
+
+print(third)
+print(2.0)
+print(100.0 / 7)
+print(1234567.891)
+print(0.00001234)
+print(1e10)
+
+# Python float is double precision.
+# C++ float has lower precision.
+f = 0.1
+print(f"{f:.8g}")
+
+# Integer division and floating-point division
+print(5 // 2, 5 / 2.0)
+
+# Fixed notation with 2 decimal places
+print(f"{3.14159:.2f} {2.0:.2f}")
+
+# Precision of 10 significant digits
+print(f"{third:.10g}")
+
+# Default floating-point notation, 6 significant digits
+# Width and fill formatting
+print(f"{42:*>8}")
+
+# Left alignment
+print(f"{'ab':<6}|")
+
+# Right alignment
+print(f"{'ab':>6}|")
+
+# Scientific notation with 3 digits after decimal
+print(f"{12345.6789:.3e}")
+```
+
+### T09
+
+```python
+class Box:
+    def __init__(self, v):
+        self.v = v
+
+
+# Python integers are immutable.
+# This function changes only its local variable.
+def by_value(x):
+    x += 10
+
+
+# Python has no direct C++ reference parameters.
+# Return the modified value instead.
+def by_ref(x):
+    return x + 10
+
+
+# Simulating pointer-like modification through a mutable container
+def by_ptr(x):
+    x[0] += 10
+
+
+def box_by_value(b):
+    # Simulate passing a copy of the object
+    copied_box = Box(b.v)
+    copied_box.v = 99
+    print("inside boxByValue:", copied_box.v)
+
+
+def box_by_ref(b):
+    b.v = 99
+
+
+def vec_by_value(v):
+    # Simulate passing a copied list
+    copied_vector = v.copy()
+    copied_vector.append(4)
+
+
+def vec_by_ref(v):
+    v.append(4)
+
+
+n = 1
+
+by_value(n)
+print("after byValue:", n)
+
+n = by_ref(n)
+print("after byRef:", n)
+
+pointer = [n]
+by_ptr(pointer)
+n = pointer[0]
+print("after byPtr:", n)
+
+b = Box(1)
+
+box_by_value(b)
+print("box after boxByValue:", b.v)
+
+box_by_ref(b)
+print("box after boxByRef:", b.v)
+
+v = [1, 2, 3]
+
+vec_by_value(v)
+print("vector size after vecByValue:", len(v))
+
+vec_by_ref(v)
+print("vector size after vecByRef:", len(v))
+
+b1 = Box(1)
+b2 = Box(b1.v)
+b2.v = 2
+
+print("b1.v =", b1.v, ", b2.v =", b2.v)
+
+orig = [1, 2, 3]
+dup = orig.copy()
+dup[0] = 100
+
+print("orig[0] =", orig[0], ", dup[0] =", dup[0])
+
+# Simulating pointer and reference access
+p = [n]
+p[0] = 50
+n = p[0]
+
+print("n via pointer:", n)
+
+r = [n]
+r[0] = 60
+n = r[0]
+
+print("n via reference:", n)
+```
+
+### T10
+
+```python
+class Tracker:
+    def __init__(self, name):
+        self.name = name
+        print("construct", self.name)
+
+    def destroy(self):
+        print("destruct", self.name)
+
+
+def work():
+    w1 = Tracker("W1")
+    w2 = Tracker("W2")
+
+    print("work() body")
+
+    # C++ destroys local objects in reverse construction order
+    w2.destroy()
+    w1.destroy()
+
+
+a = Tracker("A")
+
+# Simulating an inner scope
+b = Tracker("B")
+c = Tracker("C")
+
+print("inner scope end")
+
+# Destruction in reverse order
+c.destroy()
+b.destroy()
+
+work()
+
+d = Tracker("D")
+
+print("main end")
+
+# Destruction in reverse order at end of main
+d.destroy()
+a.destroy()
+```
+
+**Important translation notes:**
+- **T06:** Python's `//` differs from C++ integer division for negative values, so helper functions reproduce C++ truncation-toward-zero division and remainder.
+- **T07:** Python integers do not overflow. Bit masks simulate C++ unsigned 8-, 16-, and 32-bit arithmetic.
+- **T09:** Python does not have C++-style reference and pointer parameters. Mutable objects and containers are used to demonstrate similar modification behavior.
+- **T10:** Python does not guarantee C++-style destructor timing. Explicit `destroy()` calls reproduce the intended output order.

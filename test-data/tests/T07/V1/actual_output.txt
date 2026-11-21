@@ -1,0 +1,10 @@
+0u - 1 = 4294967295
+250 + 10 as uint8_t = 4
+uint8_t 65 printed directly: A
+uint8_t 65 printed with +: 65
+4000000000 + 500000000 as uint32_t = 205032704
+uint16_t 65535 + 1 = 0
+uppercase: A
+3000000000u * 2 = 1705032704
+5u - 10u = 4294967291
+(5u - 10u) > 0 is 1

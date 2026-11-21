@@ -1,0 +1,10 @@
+digraph G { rankdir=LR; graph [fontname="Helvetica", pad=0.3, nodesep=0.5, ranksep=0.45, dpi=170]; node [shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#6B7280", fontname="Helvetica", fontsize=12, margin="0.2,0.12"]; edge [color="#6B7280", fontname="Helvetica", fontsize=11]; labelloc=t; label="Five steps, two of them driven by designed prompts"; fontsize=13;
+R [label="Verified C++ to\nPython translation"];
+T1 [label="1 Prepare tests"]; T2 [label="2 Translate", fillcolor="#E4EEFB", color="#2F6FD0", penwidth=2]; T3 [label="3 Verify"]; T4 [label="4 Repair", fillcolor="#E4EEFB", color="#2F6FD0", penwidth=2]; T5 [label="5 Report"];
+L1 [shape=box, label="Write 10 C++ programs: 4 normal, 6 edge\nRun real C++, save expected output"];
+L2 [shape=box, label="Prompt P1: role, rules, 7 C++ trap checks\nOne example and differences notes"];
+L3 [shape=box, label="code/run.py extracts and runs the Python\nPASS, WRONG or ERROR vs expected output"];
+L4 [shape=box, label="Prompt P2 shows failed test, expected\nand actual output; asks cause and fix"];
+L5 [shape=box, label="results.csv, summary.txt, failures.txt\nPer-test folders for V0, V1 and V2"];
+R->T1; R->T2; R->T3; R->T4; R->T5; T1->L1; T2->L2; T3->L3; T4->L4; T5->L5;
+}

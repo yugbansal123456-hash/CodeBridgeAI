@@ -1,0 +1,4 @@
+Differences notes:
+- Python functions are dynamically typed, so one `biggest` and one `sum_all` function can handle the demonstrated types instead of C++ templates.
+- Python lists implement the stack's push/pop behaviour.
+- The floating-point result is formatted with six significant digits to match default C++ `cout`.

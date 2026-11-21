@@ -1,0 +1,5 @@
+**Important translation notes:**
+- **T06:** Python's `//` differs from C++ integer division for negative values, so helper functions reproduce C++ truncation-toward-zero division and remainder.
+- **T07:** Python integers do not overflow. Bit masks simulate C++ unsigned 8-, 16-, and 32-bit arithmetic.
+- **T09:** Python does not have C++-style reference and pointer parameters. Mutable objects and containers are used to demonstrate similar modification behavior.
+- **T10:** Python does not guarantee C++-style destructor timing. Explicit `destroy()` calls reproduce the intended output order.

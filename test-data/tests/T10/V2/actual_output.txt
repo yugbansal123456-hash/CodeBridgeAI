@@ -1,0 +1,15 @@
+construct A
+construct B
+construct C
+inner scope end
+destruct C
+destruct B
+construct W1
+construct W2
+work() body
+destruct W2
+destruct W1
+construct D
+main end
+destruct D
+destruct A

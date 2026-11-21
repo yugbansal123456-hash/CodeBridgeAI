@@ -1,0 +1,5 @@
+T04: Classes: inheritance, virtual functions, double printing (medium)
+
+V0: PASS
+V1: PASS
+V2: PASS

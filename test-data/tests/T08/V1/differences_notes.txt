@@ -1,0 +1,5 @@
+Differences notes:
+- C++ `cout` defaults to six significant digits; Python's `.6g` formatting matches that for the default-format values here.
+- C++ `fixed` with precision 2 corresponds to Python `.2f`; scientific precision 3 corresponds to `.3e`.
+- Python's width/alignment format specifiers reproduce `setw`, `setfill`, `left`, and `right`.
+- C++ integer `5 / 2` is `2`, while `5 / 2.0` is floating-point `2.5`; the corresponding output is written explicitly.
