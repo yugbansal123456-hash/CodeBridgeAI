@@ -63,3 +63,6 @@ the error message are different from the prompt we pasted on our own computer.
 We sent all 10 programs of a version in one chat. We only compare printed output, so a translation can pass without
 being a faithful rewrite (for example, the T10 translations print the destructor messages directly). We ran each
 version once, so the results may change on another run.
+
+## Video link ->https://youtu.be/6grmygVd6Vc?si=xy-mFz2FjTSGI9VX
+## Prototype link ->https://colab.research.google.com/drive/1FSYZFexydcGOgAgzGrLotA0c8HQMDdSy?usp=sharing
